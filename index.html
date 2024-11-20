@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Doğum Günü Sürprizi</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="entry-screen">
+        <h1>Siteye girmek için önce benim (Hasan'ın) doğum tarihini bilmen lazım</h1>
+        <input type="date" id="birthdate">
+        <button onclick="checkDate()">Onayla</button>
+    </div>
+    <div id="main-content" style="display: none;">
+        <audio id="trumpet-sound" src="trumpet.mp3"></audio>
+        <video id="party-video" width="100%" controls>
+            <source src="party.mp4" type="video/mp4">
+            Tarayıcınız video etiketini desteklemiyor.
+        </video>
+        <div id="letter" style="display: none;">
+            <img src="envelope.png" alt="Zarf">
+        </div>
+    </div>
+    <script>
+        // Tarih kutusunu bugünün tarihi ile doldurma
+        document.getElementById('birthdate').valueAsDate = new Date();
+
+        function checkDate() {
+            const enteredDate = document.getElementById('birthdate').value;
+            if (enteredDate === '2007-02-09') {
+                document.getElementById('entry-screen').style.display = 'none';
+                document.getElementById('main-content').style.display = 'block';
+                const video = document.getElementById('party-video');
+                document.getElementById('trumpet-sound').play();
+                video.play();
+                video.onended = function() {
+                    document.getElementById('party-video').style.display = 'none';
+                    document.getElementById('letter').style.display = 'block';
+                };
+            } else {
+                alert('Yanlış tarih! Tekrar deneyin.');
+            }
+        }
+
+        // Ekran yönlendirme kontrolü
+        window.addEventListener('orientationchange', function() {
+            if (window.innerHeight > window.innerWidth) {
+                alert('Lütfen ekranınızı yatay konuma çevirin!');
+                location.reload(); // Sayfayı yeniden başlatır
+            }
+        });
+    </script>
+</body>
+</html>
